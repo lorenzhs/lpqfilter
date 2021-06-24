@@ -17,8 +17,6 @@
 #include <iostream>
 #include <memory>
 
-#include "utils/default_hash.hpp"
-namespace htm = utils_tm::hash_tm;
 #include "implementation/utilities.hpp"
 #include "templated_qfilter_cell.hpp"
 
@@ -28,7 +26,7 @@ template <class Key, size_t remainder_bits, class Hash>
 class templated_qfilter_seq;
 
 template <class Key,
-          class Hash = htm::default_hash>
+          class Hash>
 class templated_qfilter_seq_base
 {
 public:
@@ -68,7 +66,7 @@ public:
 
 template <class Key,
 	size_t remainder_bits,
-          class Hash = htm::default_hash>
+          class Hash>
 class templated_qfilter_seq : public templated_qfilter_seq_base<Key, Hash>
 {
 public:
@@ -432,9 +430,11 @@ public:
 
     void prefetch(const hashed_type& hashed) const override
     {
+        /*
         const auto[q, r] = this->get_quotient_and_remainder(hashed);
-		const auto q_pos = quotient_position(q);
+        const auto q_pos = quotient_position(q);
         __builtin_prefetch(&table[q_pos.first]);
+        */
     }
 
 	qf::InsertResult insert(const key_type& key) override
